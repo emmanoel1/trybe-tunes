@@ -28,7 +28,7 @@ class Search extends React.Component {
     }
   }
 
-  btnClick() {
+  async btnClick() {
     const {
       searchInput,
     } = this.state;
@@ -40,10 +40,10 @@ class Search extends React.Component {
       loaded: 'carregando',
     });
 
-    searchAlbumsAPI(`${searchInput}`)
-      .then((artist) => this.setState({
+    await searchAlbumsAPI(`${searchInput}`)
+      .then(() => this.setState({
         loaded: 'Load Finished',
-        searchedName: `${artist}`,
+        searchedName: `${searchInput}`,
       }));
   }
 
