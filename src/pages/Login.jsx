@@ -43,11 +43,9 @@ class Login extends React.Component {
     const {
       nameInput,
       disabled,
-    } = this.state;
-
-    const {
       loaded,
     } = this.state;
+
     if (loaded === 'carregando') {
       return <Loading />;
     }
