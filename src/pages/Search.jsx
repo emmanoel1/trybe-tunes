@@ -1,5 +1,5 @@
 import React from 'react';
-import searchAlbumsAPI from '../services/searchAlbumsAPI';
+// import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import Loading from './Loading';
 
 class Search extends React.Component {
@@ -8,7 +8,6 @@ class Search extends React.Component {
     this.state = {
       searchInput: '',
       loaded: '',
-      searchedName: '',
       inputDisabled: false,
       btnDisabled: true,
     };
@@ -28,10 +27,10 @@ class Search extends React.Component {
     }
   }
 
-  async btnClick() {
-    const {
-      searchInput,
-    } = this.state;
+  btnClick() {
+    // const {
+    //   searchInput,
+    // } = this.state;
 
     this.setState({
       searchInput: '',
@@ -40,22 +39,21 @@ class Search extends React.Component {
       loaded: 'carregando',
     });
 
-    await searchAlbumsAPI(`${searchInput}`)
-      .then(() => this.setState({
-        loaded: 'Load Finished',
-        searchedName: `${searchInput}`,
-      }));
+    // searchAlbumsAPI(`${searchInput}`)
+    //   .then(() => this.setState({
+    //     loaded: 'Load Finished',
+    //   }));
   }
 
   render() {
-    const { searchedName, inputDisabled, btnDisabled, loaded } = this.state;
+    const { inputDisabled, btnDisabled, loaded } = this.state;
 
     if (loaded === 'carregando') {
       return <Loading />;
     }
-    if (loaded === 'Load Finished') {
-      return <p>{ `Resultado de álbuns de: ${searchedName}` }</p>;
-    }
+    // if (loaded === 'Load Finished') {
+    //   return <p>{ `Resultado de álbuns de: ${searchedName}` }</p>;
+    // }
     return (
       <div data-testid="page-search">
         <input
