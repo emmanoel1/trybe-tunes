@@ -1,7 +1,7 @@
 import React from 'react';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import Loading from './Loading';
-// Ao clicar no botão de Pesquisar, limpe o valor do input e faça uma requisição utilizando a função do arquivo searchAlbumsAPIs.js. Lembre-se que essa função espera receber uma string com o nome da banda ou artista.
+
 class Search extends React.Component {
   constructor() {
     super();
@@ -42,7 +42,7 @@ class Search extends React.Component {
     const searched = await searchAlbumsAPI(artist);
     if (searched.length === 0) {
       this.setState({
-        apiResponse: 'Nenhum álbum foi encontrado', // userResponse
+        apiResponse: 'Nenhum álbum foi encontrado',
         loaded: false,
         queryedApi: [],
       });
@@ -63,9 +63,7 @@ class Search extends React.Component {
 
     return (
       <div data-testid="page-search">
-        {load ? (
-          <Loading />
-        ) : (
+        {loaded ? <Loading /> : (
           <form action="">
             <input
               type="text"
@@ -88,4 +86,5 @@ class Search extends React.Component {
     );
   }
 }
+
 export default Search;

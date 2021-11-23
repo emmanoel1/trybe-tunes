@@ -27,17 +27,12 @@ class Login extends React.Component {
   }
 
   inputHandle({ target }) {
-    const {
-      nameInput,
-    } = this.state;
     // console.log(target.value);
-    this.setState({ nameInput: target.value });
-    const limit = 3;
-    if (nameInput.length + 1 >= limit) {
-      this.setState({
-        disabled: false,
-      });
-    }
+    const minLength = 3;
+    this.setState({
+      nameInput: target.value,
+      disabled: target.value.length < minLength,
+    });
   }
 
   render() {
