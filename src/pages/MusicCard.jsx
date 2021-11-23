@@ -1,37 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from './Loading';
 
 class MusicCard extends React.Component {
   constructor() {
     super();
     this.state = {
-      loading: false,
+      loading: true,
       favorites: false,
     };
 
     this.favorite = this.favorite.bind(this);
+    this.restore = this.restore.bind(this);
   }
 
-  async favorite() {
-    const { musics } = this.props;
-    const { favorites } = this.state;
+  componentDidMount() {
+    this.restore();
+  }
+
+  restore() {
+    const { musics: { trackId } } = this.props;
+    getFavoriteSongs().then((response) => {
+      this.setState({
+        favorites: response.some((music) => music.trackId === trackId) });
+    });
+  }
+
+  favorite() {
+    const {
+      state: { favorites },
+      props: { musics },
+    } = this;
     if (!favorites) {
       this.setState({
-        loading: true,
+        loading: false,
         favorites: true,
       });
-      const favoriteSong = await addSong(musics);
-      if (favoriteSong === 'OK') {
+      addSong(musics).then(() => {
         this.setState({
-          loading: false,
+          loading: true,
         });
-      }
+      });
     } else {
       this.setState({
         favorites: false,
-      });
+      }, (() => removeSong(musics)));
     }
   }
 
@@ -42,7 +56,7 @@ class MusicCard extends React.Component {
       favorite,
     } = this;
     return (
-      loading ? <Loading /> : (
+      !loading ? <Loading /> : (
         <div>
           <p>
             { musicName }
