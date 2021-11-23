@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import Loading from './Loading';
 
@@ -48,9 +49,9 @@ class Search extends React.Component {
       });
     } else {
       this.setState({
-        loaded: false,
         apiResponse: `Resultado de álbuns de: ${artist}`,
-        queryedApi: [searched],
+        loaded: false,
+        queryedApi: searched,
       });
     }
   }
@@ -58,13 +59,10 @@ class Search extends React.Component {
   render() {
     const { artist, btnDisabled, loaded, queryedApi, apiResponse } = this.state;
 
-    console.log(queryedApi);
-    console.log(apiResponse);
-
     return (
       <div data-testid="page-search">
         {loaded ? <Loading /> : (
-          <form action="">
+          <div>
             <input
               type="text"
               value={ artist }
@@ -80,8 +78,25 @@ class Search extends React.Component {
             >
               Pesquisar
             </button>
-          </form>
+          </div>
         )}
+        <div>
+          <h3>{ apiResponse }</h3>
+          <div>
+            {queryedApi.map((array) => (
+              <div key={ array.collectionId }>
+                <img src={ array.artworkUrl100 } alt={ `${array.collectionName}` } />
+                <p>{ array.collectionName }</p>
+                <Link
+                  data-testid={ `link-to-album-${array.collectionId}` }
+                  to={ `/album/${array.collectionId}` }
+                >
+                  Ir Para o Album
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
