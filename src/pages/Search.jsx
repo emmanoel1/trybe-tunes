@@ -100,6 +100,7 @@ class Search extends React.Component {
       </div>
     );
   }
+  // Com Ajuda de severo.
 }
 
 export default Search;
