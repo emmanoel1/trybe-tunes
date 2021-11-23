@@ -29,8 +29,23 @@ class Album extends React.Component {
     } = this.state;
     console.log(musicList);
     return (
-      <div data-testid="page-album">
-        <MusicCard musicList={ musicList } />
+      <div>
+        {musicList.map((music, index) => (
+          index === 0 ? (
+            <div>
+              <p data-testid="artist-name">{music.artistName}</p>
+              <p data-testid="album-name">{music.collectionName}</p>
+            </div>
+          ) : (
+            <MusicCard
+              checkboxMusicId={ `checkbox-music-${music.trackId}` }
+              key={ music.trackId }
+              previewUrl={ music.previewUrl }
+              musics={ music }
+              musicId={ music.trackId }
+              musicName={ music.trackName }
+            />
+          )))}
       </div>
     );
   }
