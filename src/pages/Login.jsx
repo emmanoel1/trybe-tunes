@@ -30,6 +30,7 @@ class Login extends React.Component {
     const {
       nameInput,
     } = this.state;
+    // console.log(target.value);
     this.setState({ nameInput: target.value });
     const limit = 3;
     if (nameInput.length + 1 >= limit) {
